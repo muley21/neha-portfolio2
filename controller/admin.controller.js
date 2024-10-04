@@ -7,6 +7,7 @@ const cloudinary = require("../utils/cloudinary.config")
 const { upload, projectUpload } = require("../utils/upload")
 const path = require("path")
 const Projects = require("../models/Projects")
+const Enquiry = require("../models/Enquiry")
 
 // Technology
 exports.addTechnology = asyncHandler(async (req, res) => {
@@ -233,4 +234,18 @@ exports.deleteProject = asyncHandler(async (req, res) => {
     await Promise.all(allImages)
     await Projects.findByIdAndDelete(id)
     res.json({ message: "Project Delete Success...!" })
+})
+
+exports.fetchEnqueryMessage = asyncHandler(async (req, res) => {
+    const result = await Enquiry.find()
+    res.json({ message: "Enquiry Message Fetch Success...!", result })
+})
+
+exports.updateEnqueryMessage = asyncHandler(async (req, res) => {
+    await Enquiry.findByIdAndUpdate(req.params.id, req.body)
+    res.json({ message: "Enquiry Message Updated Success...!", })
+})
+exports.deleteEnqueryMessage = asyncHandler(async (req, res) => {
+    await Enquiry.findByIdAndDelete(req.params.id,)
+    res.json({ message: "Enquiry Message Delete Success...!", })
 })
